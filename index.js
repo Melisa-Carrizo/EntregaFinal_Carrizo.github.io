@@ -83,12 +83,12 @@ if (carritoGuardado) {
 const box = document.getElementById("container");
   productos.forEach((producto, indice) => {
   let card = document.createElement("div");
-  card.classList.add("card", "col-lg-3");
-  card.innerHTML = `<img src="${producto.img}" class="card-img-top" alt="${producto.nombre}">
+  card.classList.add("card", "col-lg-3", "customCard");
+  card.innerHTML = `<img id="imgdiv" src="${producto.img}" alt="${producto.nombre}">
     <div class="card-body">
     <h5 class="card-title">${producto.nombre}</h5>
     <p class="card-text">$${producto.precio}</p>
-    <a href="#" class="btn btn-outline-primary botonAddCart" onClick="addCarrito(${indice})">Agregar al carrito</a>
+    <a href="index.html#carritoHref" class="btn btn-outline-primary botonAddCart" onClick="addCarrito(${indice})">Agregar al carrito</a>
     </div>`;
   box.appendChild(card);
 });
@@ -124,9 +124,9 @@ function mostrar_carrito() {
     fila.innerHTML = `<img src=".${producto.img}" alt="">
         <h5>${producto.nombre}</h5>
         <div class="btn-group" role="group" aria-label="Basic example">
-          <button type="button" class="btn btn-primary" onClick="restarHoras()">-</button>
+        <button type="button" class="btn btn-primary" onClick="restarHoras(${carrito.indexOf(producto)})">-</button>
           <h5>${producto.hora}</h5>
-          <button type="button" class="btn btn-primary" onClick="sumarHoras">+</button>
+          <button type="button" class="btn btn-primary" onClick="sumarHoras(${carrito.indexOf(producto)})">+</button>
         </div>
         <h5>${producto.tipo}</h5>
         <h5>${producto.precio}</h5>
@@ -148,7 +148,7 @@ function mostrarTodo() {
   box.innerHTML = "";
   productos.forEach((producto, indice) => {
     let card = document.createElement("div");
-    card.classList.add("card", "col-lg-3");
+    card.classList.add("card", "col-lg-3", "customCard");
     card.innerHTML = `<img src="${producto.img}" class="card-img-top" alt="${producto.nombre}">
       <div class="card-body">
       <h5 class="card-title">${producto.nombre}</h5>
@@ -164,7 +164,7 @@ function mostrarPorTipoVarios() {
   box.innerHTML = "";
   productosFiltrados.forEach((producto, indice) => {
     let card = document.createElement("div");
-    card.classList.add("card", "col-lg-3");
+    card.classList.add("card", "col-lg-3", "customCard");
     card.innerHTML = `<img src="${producto.img}" class="card-img-top" alt="${producto.nombre}">
       <div class="card-body">
       <h5 class="card-title">${producto.nombre}</h5>
@@ -180,7 +180,7 @@ function mostrarPorTipoJuegos() {
   box.innerHTML = "";
   productosFiltrados.forEach((producto, indice) => {
     let card = document.createElement("div");
-    card.classList.add("card", "col-lg-3");
+    card.classList.add("card", "col-lg-3", "customCard");
     card.innerHTML = `<img src="${producto.img}" class="card-img-top" alt="${producto.nombre}">
       <div class="card-body">
       <h5 class="card-title">${producto.nombre}</h5>
@@ -196,7 +196,7 @@ function mostrarPorTipoInflables() {
   box.innerHTML = "";
   productosFiltrados.forEach((producto, indice) => {
     let card = document.createElement("div");
-    card.classList.add("card", "col-lg-3");
+    card.classList.add("card", "col-lg-3", "customCard");
     card.innerHTML = `<img src="${producto.img}" class="card-img-top" alt="${producto.nombre}">
             <div class="card-body">
             <h5 class="card-title">${producto.nombre}</h5>
@@ -221,9 +221,10 @@ function vaciarCarrito() {
 
 function actualizarTotal() {
   const totalElement = document.getElementById("totalAct");
-  const total = carrito.reduce((accumulator, producto) => accumulator + producto.precio, 0);
+  const total = carrito.reduce((accumulator, producto) => accumulator + producto.precio * producto.hora, 0);
   totalElement.textContent = `Total: $${total}`;
 }
+
 const botonComprar = document.getElementById("botonFinalizar");
 botonComprar.addEventListener("click", finalizarCompra);
 
@@ -246,5 +247,19 @@ function finalizarCompra() {
   }
 }
 
+function sumarHoras(indice) {
+  carrito[indice].hora++;
+  localStorage.setItem("carrito", JSON.stringify(carrito));
+  mostrar_carrito();
+  actualizarTotal();
+}
 
+function restarHoras(indice) {
+  if (carrito[indice].hora > 0) {
+    carrito[indice].hora--;
+    localStorage.setItem("carrito", JSON.stringify(carrito));
+    mostrar_carrito();
+    actualizarTotal();
+  }
+}
   
