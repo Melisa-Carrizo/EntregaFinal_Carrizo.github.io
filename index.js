@@ -123,14 +123,14 @@ function mostrar_carrito() {
     fila.className = "producto_row";
     fila.innerHTML = `<img src=".${producto.img}" alt="">
         <h5>${producto.nombre}</h5>
-        <div class="btn-group" role="group" aria-label="Basic example">
-        <button type="button" class="btn btn-primary" onClick="restarHoras(${carrito.indexOf(producto)})">-</button>
-          <h5>${producto.hora}</h5>
-          <button type="button" class="btn btn-primary" onClick="sumarHoras(${carrito.indexOf(producto)})">+</button>
+        <div class="btn-group btn-group-sm" role="group" aria-label="Basic example">
+          <button type="button" class="btn btn-primary btnHoras" onClick="restarHoras(${carrito.indexOf(producto)})">-</button>
+          <h5 class="horasMostrar">${producto.hora}</h5>
+          <button type="button" class="btn btn-primary btnHoras" onClick="sumarHoras(${carrito.indexOf(producto)})">+</button>
         </div>
         <h5>${producto.tipo}</h5>
         <h5>${producto.precio}</h5>
-        <button type="button" class="btn btn-danger" onClick="eliminarProducto(${producto.numero})">Eliminar del carrito</button>`;
+        <button type="button" class="btn btn-danger btnCustom" onClick="eliminarProducto(${producto.numero})">Eliminar del carrito</button>`;
     tabla.append(fila);
   }
 }
