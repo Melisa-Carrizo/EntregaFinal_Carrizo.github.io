@@ -103,4 +103,24 @@
 }
 .carritoFinal #totalAct {
   font-size: 2rem;
+}
+
+#climaContainer {
+  display: flex;
+  align-items: center;
+}
+#climaContainer .climaTempContainer {
+  display: flex;
+  padding-left: 1rem;
+}
+#climaContainer .climaTempContainer .climaImg {
+  width: 26px;
+  height: 26px;
+}
+#climaContainer .climaName {
+  padding-left: 1rem;
+}
+#climaContainer .climaDes {
+  padding-left: 1.2rem;
+  text-transform: capitalize;
 }/*# sourceMappingURL=index.css.map */

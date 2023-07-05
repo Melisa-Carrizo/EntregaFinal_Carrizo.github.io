@@ -262,4 +262,45 @@ function restarHoras(indice) {
     actualizarTotal();
   }
 }
-  
+
+let intervalSpan;
+
+function navbarSpanToggleFontWeight() {
+  let spanNavbar = document.getElementById("spanNavbar");
+
+  if (spanNavbar.style.fontWeight === "400") {
+    spanNavbar.style.fontWeight = "500";
+  } else {
+    spanNavbar.style.fontWeight = "400";
+  }
+}
+
+function startNavbarSpanInterval() {
+  intervalSpan = setInterval(navbarSpanToggleFontWeight, 1000);
+}
+
+function clearNavbarSpanInterval() {
+  clearInterval(intervalSpan);
+}
+
+startNavbarSpanInterval();
+
+setTimeout(clearNavbarSpanInterval, 20000);
+
+function geoPosicion(posicion){
+  let lat = posicion.coords.latitude;
+  let long = posicion.coords.longitude;
+  let key = "658143c3deddba5b761482b22c13f7fa";
+
+  fetch(`https://api.openweathermap.org/data/2.5/weather?lat=${lat}&lon=${long}&exclude={part}&appid=${key}&units=metric&lang=es`)
+  .then( response => response.json())
+  .then( data => {
+    const climaContainer = document.getElementById("climaContainer");
+    climaContainer.innerHTML = `<div class="climaTempContainer"><img src="./img/clima_ubicacion.png" alt="clima" class="climaImg"></img><h5 class="climaStyle climaName">${data.name}</h5></div>
+    <div class="climaTempContainer"><img src="./img/clima_icon.png" alt="clima" class="climaImg"></img><h5 class="climaStyle climaTemp">${data.main.temp}</h5></div>
+    <h5 class="climaStyle climaDes">${data.weather[0].description}</h5>
+    `
+  })
+}
+
+navigator.geolocation.getCurrentPosition( geoPosicion );
