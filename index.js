@@ -1,3 +1,5 @@
+/* Armado de carrito visual */
+
 let productos = [
     {
       numero: 1,
@@ -72,8 +74,8 @@ let productos = [
       hora: 0,
     },
   ];
-  
-  let carrito = [];
+
+let carrito = [];
 
 const carritoGuardado = localStorage.getItem("carrito");
 if (carritoGuardado) {
@@ -144,6 +146,8 @@ botonVarios.addEventListener("click", mostrarPorTipoVarios);
 botonJuegos.addEventListener("click", mostrarPorTipoJuegos);
 botonInflables.addEventListener("click", mostrarPorTipoInflables);
 
+/* filtros */
+
 function mostrarTodo() {
   box.innerHTML = "";
   productos.forEach((producto, indice) => {
@@ -209,6 +213,7 @@ function mostrarPorTipoInflables() {
 
 mostrar_carrito();
 
+/* Eliminar carrito */
 const botonVaciar = document.getElementById("boton_vaciar");
 botonVaciar.addEventListener("click", vaciarCarrito);
 
@@ -224,6 +229,8 @@ function actualizarTotal() {
   const total = carrito.reduce((accumulator, producto) => accumulator + producto.precio * producto.hora, 0);
   totalElement.textContent = `Total: $${total}`;
 }
+
+/* Finalizar compra */
 
 const botonComprar = document.getElementById("botonFinalizar");
 botonComprar.addEventListener("click", finalizarCompra);
@@ -247,6 +254,8 @@ function finalizarCompra() {
   }
 }
 
+/* Personalizar horas */
+
 function sumarHoras(indice) {
   carrito[indice].hora++;
   localStorage.setItem("carrito", JSON.stringify(carrito));
@@ -262,6 +271,7 @@ function restarHoras(indice) {
     actualizarTotal();
   }
 }
+/* Asincronia */
 
 let intervalSpan;
 
@@ -286,6 +296,8 @@ function clearNavbarSpanInterval() {
 startNavbarSpanInterval();
 
 setTimeout(clearNavbarSpanInterval, 20000);
+
+/* API Clima */
 
 function geoPosicion(posicion){
   let lat = posicion.coords.latitude;
